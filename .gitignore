@@ -25,3 +25,4 @@ package-lock.json
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+docker-compose.override.yml

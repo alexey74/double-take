@@ -111,6 +111,7 @@ module.exports.config = {
       anyOf: [
         { required: ['compreface'] },
         { required: ['deepstack'] },
+        { required: ['deepface'] },
         { required: ['aiserver'] },
         { required: ['facebox'] },
         { required: ['rekognition'] },
@@ -127,6 +128,16 @@ module.exports.config = {
           },
         },
         deepstack: {
+          type: 'object',
+          required: ['url'],
+          properties: {
+            url: { type: 'string' },
+            key: { type: 'string' },
+            opencv_face_required: { type: 'boolean' },
+            cameras: { type: 'array' },
+          },
+        },
+        deepface: {
           type: 'object',
           required: ['url'],
           properties: {

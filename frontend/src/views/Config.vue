@@ -360,6 +360,7 @@ export default {
       if (name === 'aiserver') return 'AIServer';
       if (name === 'facebox') return 'Facebox';
       if (name === 'rekognition') return 'Rekognition';
+      if (name === 'deepface') return 'DeepFace';
       return name;
     },
     async postRestart() {

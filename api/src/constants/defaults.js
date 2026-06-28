@@ -58,6 +58,11 @@ module.exports = {
       timeout: 15,
       opencv_face_required: false,
     },
+    deepface: {
+      timeout: 15,
+      opencv_face_required: false,
+      anti_spoofing: true,
+    },
     aiserver: {
       timeout: 15,
       opencv_face_required: false,
