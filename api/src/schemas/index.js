@@ -145,6 +145,18 @@ module.exports.config = {
             key: { type: 'string' },
             opencv_face_required: { type: 'boolean' },
             cameras: { type: 'array' },
+
+            model_name: { type: 'string' },
+            detector_backend: { type: 'string' },
+            distance_metric: { type: 'string' },
+            enforce_detection: { type: 'boolean' },
+            align: { type: 'boolean' },
+            l2_normalize: { type: 'boolean' },
+            expand_percentage: { type: 'number' },
+            normalization: { type: 'string' },
+            anti_spoofing: { type: 'boolean' },
+            similarity_search: { type: 'boolean' },
+            k: { type: 'number' },
           },
         },
         aiserver: {

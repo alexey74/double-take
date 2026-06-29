@@ -9,20 +9,23 @@ const { DEEPFACE } = DETECTORS || {};
 
 let indexRebuilt = false;
 
+let appendParams = (formData) => {
+  for (let param in DEEPFACE) {
+    if (param) {
+      formData.append(param.toLowerCase(), `${DEEPFACE[param]}`);
+    }
+  }
+}
+
 module.exports.recognize = async ({ key }) => {
   const { URL, KEY } = DEEPFACE;
   const formData = new FormData();
   formData.append('img', fs.createReadStream(key));
-  formData.append('search_method', 'ann');
-  formData.append('model_name', 'ArcFace');
-  // formData.append('enforce_detection', 'false');
-  formData.append('l2_normalize', 'true');
-  formData.append('detector_backend', 'mtcnn');
-
-  // if (KEY) formData.append('api_key', KEY);
+  appendParams(formData);
 
   if (!indexRebuilt) {
     console.info('deepface: rebuilding index');
+    
     await axios({
       method: 'post',
       timeout: DEEPFACE.TIMEOUT * 1000,
@@ -57,11 +60,8 @@ module.exports.train = ({ name, key }) => {
   const formData = new FormData();
   formData.append('img', fs.createReadStream(key));
   formData.append('img_name', name);
-  formData.append('l2_normalize', 'true');
-  formData.append('model_name', 'ArcFace');
-  formData.append('detector_backend', 'mtcnn');
+  appendParams(formData);
 
-  // if (KEY) formData.append('api_key', KEY);
   return axios({
     method: 'post',
     timeout: DEEPFACE.TIMEOUT * 1000,
@@ -77,17 +77,15 @@ module.exports.train = ({ name, key }) => {
 };
 
 module.exports.remove = ({ name }) => {
-
-  return {};
-
   const { URL, KEY } = DEEPFACE;
   const formData = new FormData();
-  formData.append('userid', name);
-  if (KEY) formData.append('api_key', KEY);
+  formData.append('img_name', name);
+  appendParams(formData);
+  indexRebuilt = false;
   return axios({
     method: 'post',
     timeout: DEEPFACE.TIMEOUT * 1000,
-    url: `${URL}/v1/vision/face/delete`,
+    url: `${URL}/delete`,
     headers: {
       ...formData.getHeaders(),
     },

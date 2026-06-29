@@ -61,7 +61,8 @@ module.exports = {
     deepface: {
       timeout: 15,
       opencv_face_required: false,
-      anti_spoofing: true,
+      model_name: 'Facenet',
+      detector_backend: 'mtcnn',
     },
     aiserver: {
       timeout: 15,
