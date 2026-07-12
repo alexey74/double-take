@@ -9,10 +9,11 @@ const { DEEPFACE } = DETECTORS || {};
 
 let indexRebuilt = false;
 
-let appendParams = (formData) => {
+let appendParams = (formData, train = false) => {
   for (let param in DEEPFACE) {
     if (param) {
-      formData.append(param.toLowerCase(), `${DEEPFACE[param]}`);
+      let val = (train && param.toLowerCase() == 'anti_spoofing') ? 'false' : `${DEEPFACE[param]}`;
+      formData.append(param.toLowerCase(), val);
     }
   }
 }
@@ -25,7 +26,7 @@ module.exports.recognize = async ({ key }) => {
 
   if (!indexRebuilt) {
     console.info('deepface: rebuilding index');
-    
+
     await axios({
       method: 'post',
       timeout: DEEPFACE.TIMEOUT * 1000,
@@ -60,7 +61,7 @@ module.exports.train = ({ name, key }) => {
   const formData = new FormData();
   formData.append('img', fs.createReadStream(key));
   formData.append('img_name', name);
-  appendParams(formData);
+  appendParams(formData, train = true);
 
   return axios({
     method: 'post',

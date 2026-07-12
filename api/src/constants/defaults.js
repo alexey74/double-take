@@ -11,6 +11,8 @@ module.exports = {
       confidence: 60,
       purge: 168,
       min_area: 10000,
+      max_pitch: 30,
+      max_yaw: 20,
     },
     unknown: {
       save: true,
@@ -63,6 +65,8 @@ module.exports = {
       opencv_face_required: false,
       model_name: 'Facenet',
       detector_backend: 'mtcnn',
+      anti_spoofing: false,
+      search_method: 'ann',
     },
     aiserver: {
       timeout: 15,

@@ -104,7 +104,11 @@ module.exports.normalize = ({ camera, data }) => {
         ...obj.mask,
         probability: parseFloat((obj.mask.probability * 100).toFixed(2)),
       };
-    const checks = actions.checks({ MATCH, UNKNOWN, ...output });
+    if (obj.pose)
+      output.pose = {
+        ...obj.pose,
+      };
+      const checks = actions.checks({ MATCH, UNKNOWN, ...output });
     if (checks.length) output.checks = checks;
     return checks !== false ? output : [];
   });
